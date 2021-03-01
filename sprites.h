@@ -18,6 +18,23 @@ typedef struct {
 	int count_coords;
 } JS_VG_PATH;
 
+typedef struct {
+	VGfloat cx;
+	VGfloat cy;
+	VGfloat width;
+	VGfloat height;
+} JS_VG_ELLIPSE;
+
+typedef struct {
+	VGfloat x;
+	VGfloat y;
+	VGfloat width;
+	VGfloat height;
+	VGfloat startAngle;
+	VGfloat angleExtent;
+	int arcType;
+} JS_VG_ARC;
+
 //typedef struct JS_VG_SPRITE JS_VG_SPRITE;
 
 typedef struct {
@@ -32,6 +49,11 @@ typedef struct {
 	void (* draw_func)(void *);
 		
 } JS_VG_SPRITE;
+
+typedef struct {
+	int count;
+	JS_VG_SPRITE *sprites
+} JS_VG_SPRITE_GROUP;
 
 typedef struct {
 	VGint cap_style;
@@ -59,6 +81,14 @@ void draw_sprite(JS_VG_SPRITE *sprite);
 
 void init_sprite_path(JS_VG_SPRITE_PATH *sprite_path);
 
+void init_sprite_group(JS_VG_SPRITE_GROUP *sprite_group);
+
 void draw_sprite_path(JS_VG_SPRITE_PATH *sprite_path);
 
+void draw_sprite_group(JS_VG_SPRITE_GROUP *sprite_group);
+
 VGPath inti_path_raw_path(void *data);
+
+VGPath inti_path_ellipse(void *data);
+
+VGPath inti_path_arc(void *data);

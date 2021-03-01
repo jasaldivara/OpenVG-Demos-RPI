@@ -85,35 +85,35 @@ void draw(EGL_DISPMANX_WINDOW_T *nativewindow){
     vgClear(0, 0, nativewindow->width, nativewindow->height);
 
     vgSeti(VG_BLEND_MODE, VG_BLEND_SRC_OVER);
-    // TODO: Modificar para ajustar a resolución de pantalla
+    
     while (1){
 	// ¿Por qué ellipse.c no necesita llamar a esta función durante ciclo?
 	//vgSetfv(VG_CLEAR_COLOR, 4, clearColor);
     	vgClear(0, 0, nativewindow->width, nativewindow->height);
 
     	//simple_shape();
-	draw_sprite(&sprite_1);
+	draw_sprite(&sprite_grupo);
 	eglSwapBuffers(p_state->display, p_state->surface);
 
 	//stroke_desp += 1.0f;
-	sprite_1.rotate += 1.0f;
-	sprite_1.translate[0] += dx;
-	sprite_1.translate[1] += dy;
+	sprite_grupo.rotate += 1.0f;
+	sprite_grupo.translate[0] += dx;
+	sprite_grupo.translate[1] += dy;
 	
-	if (sprite_1.translate[0] + 100 >= nativewindow->width){
-	    sprite_1.translate[0] = nativewindow->width - 100;
+	if (sprite_grupo.translate[0] + 100 >= nativewindow->width){
+	    sprite_grupo.translate[0] = nativewindow->width - 100;
 	    dx = -1;
 	}
-	if (sprite_1.translate[0] - 100 <= 0){
-	    sprite_1.translate[0] = 100;
+	if (sprite_grupo.translate[0] - 100 <= 0){
+	    sprite_grupo.translate[0] = 100;
 	    dx = 1;
 	}
-	if (sprite_1.translate[1] + 100 >= nativewindow->height){
-	    sprite_1.translate[1] = nativewindow->height - 100;
+	if (sprite_grupo.translate[1] + 100 >= nativewindow->height){
+	    sprite_grupo.translate[1] = nativewindow->height - 100;
 	    dy = -1;
 	}
-	if (sprite_1.translate[1] - 100 <= 0){
-	    sprite_1.translate[1] = 100;
+	if (sprite_grupo.translate[1] - 100 <= 0){
+	    sprite_grupo.translate[1] = 100;
 	    dy = 1;
 	}
 	
@@ -141,7 +141,7 @@ main(int argc, char *argv[])
     init_dispmanx(&nativewindow);
     egl_from_dispmanx(p_state, &nativewindow);
     
-    init_sprite(&sprite_1);
+    init_sprite(&sprite_grupo);
 
     draw(&nativewindow);
     eglSwapBuffers(p_state->display, p_state->surface);

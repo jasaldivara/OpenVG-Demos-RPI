@@ -24,6 +24,15 @@ void init_sprite_path(JS_VG_SPRITE_PATH *sprite_path){
     sprite_path->path = sprite_path->init_sp_path(sprite_path->data);
 }
 
+void init_sprite_group(JS_VG_SPRITE_GROUP *sprite_group){
+    JS_VG_SPRITE *array = sprite_group->sprites;
+    
+    for (int i = 0; i < sprite_group->count; i++){
+	
+	array[i].init_sprite(array[i].data);
+    }
+}
+
 void draw_sprite(JS_VG_SPRITE *sprite){
 
     VGfloat matrix[9];
@@ -53,6 +62,17 @@ void draw_sprite_path(JS_VG_SPRITE_PATH *sprite_path){
     vgDrawPath(sprite_path->path, VG_STROKE_PATH | VG_FILL_PATH);
 }
 
+
+void draw_sprite_group(JS_VG_SPRITE_GROUP *sprite_group){
+    JS_VG_SPRITE *array = sprite_group->sprites;
+    
+    for (int i = 0; i < sprite_group->count; i++){
+	
+	draw_sprite(&array[i]);
+	//array[i].draw_func(array[i].data);
+    }
+}
+
 // Un iniciador de trazo para cada tipo de forma:
 // Trazo "en crudo", cuadrados, polígonos, alipses, arcos,
 // usando librería VGU
@@ -68,5 +88,33 @@ VGPath inti_path_raw_path(void *data){
 	vgAppendPathData(path, path_struct->count_cmds, path_struct->cmds, path_struct->coords);
 	
 	return path;
+}
+
+VGPath inti_path_ellipse(void *data){
+	JS_VG_ELLIPSE *ellipse_data = data;
+	
+	// TODO: Mejorar llamada a vgCreatePath
+	VGPath path = vgCreatePath(VG_PATH_FORMAT_STANDARD, 
+			       VG_PATH_DATATYPE_F, 1, 0, 0, 0,
+			       VG_PATH_CAPABILITY_APPEND_TO);
+	vguEllipse(path, ellipse_data->cx, ellipse_data->cy,
+		    ellipse_data->width, ellipse_data->height);
+	
+	return path;
+}
+
+VGPath inti_path_arc(void *data){
+    JS_VG_ARC *arc_data = data;
+
+    // TODO: Mejorar llamada a vgCreatePath
+    VGPath path = vgCreatePath(VG_PATH_FORMAT_STANDARD, 
+			    VG_PATH_DATATYPE_F, 1, 0, 0, 0,
+			    VG_PATH_CAPABILITY_APPEND_TO);
+    vguArc(path, arc_data->x, arc_data->y, arc_data->width,
+		arc_data->height, arc_data->startAngle,
+		arc_data->angleExtent, arc_data->arcType);
+    
+    return path;
+    
 }
 

@@ -85,10 +85,27 @@ JS_VG_PATH path_1 = {
 	.count_cmds = 16
 };
 
+JS_VG_ARC a_1 = {
+	.x = 0,
+	.y = 0,
+	.width = 20,
+	.height = 30,
+	.startAngle = 45,
+	.angleExtent = 315,
+	.arcType = VGU_ARC_PIE
+};
+
+JS_VG_ELLIPSE e_1 = {
+	.cx = 0,
+	.cy = 0,
+	.width = 50,
+	.height = 75
+};
+
 JS_VG_SPRITE_PATH sprite_path_1 = {
 	.cap_style = VG_CAP_ROUND,
 	.join_style = VG_JOIN_ROUND,
-	.stroke_line_width = 7.5,
+	.stroke_line_width = 5,
 	.fill_color = { 
 0.81,
 0.72,
@@ -102,12 +119,93 @@ JS_VG_SPRITE_PATH sprite_path_1 = {
 	.init_sp_path = inti_path_raw_path
 };
 
-JS_VG_SPRITE sprite_1 = {
-	.translate = { 600, 250 },
+JS_VG_SPRITE_PATH sprite_path_ellipse = {
+	.cap_style = VG_CAP_BUTT,
+	.join_style = VG_JOIN_MITER,
+	.stroke_line_width = 5,
+	.fill_color = { 
+0.69,
+0.87,
+0.90, 0.75, },
+	.stroke_color = { 
+0.0,
+0.54,
+0.87, 0.75,  },
+	.bg_color = { 1.0, 1.0, 1.0, 0.75 },
+	.data = &e_1,
+	.init_sp_path = inti_path_ellipse
+};
+
+JS_VG_SPRITE_PATH sprite_path_arc = {
+	.cap_style = VG_CAP_BUTT,
+	.join_style = VG_JOIN_MITER,
+	.stroke_line_width = 0,
+	.fill_color = { 
+0.0,
+0.54,
+0.87, 0.75,  },
+	.stroke_color = { 
+0.0,
+0.54,
+0.87, 0.75, },
+	.bg_color = { 1.0, 1.0, 1.0, 0.75 },
+	.data = &a_1,
+	.init_sp_path = inti_path_arc
+};
+
+JS_VG_SPRITE group_array[5] = {{
+	.translate = { 0, 0 },
 	.scale = { 1, 1 },
-	.rotate = 45,
+	.rotate = 0,
 	.data = &sprite_path_1,
 	.init_sprite = init_sprite_path,
 	.draw_func = draw_sprite_path
+},
+{
+	.translate = { -50, 0 },
+	.scale = { 1, 1 },
+	.rotate = 0,
+	.data = &sprite_path_ellipse,
+	.init_sprite = init_sprite_path,
+	.draw_func = draw_sprite_path
+},
+{
+	.translate = { -50, 0 },
+	.scale = { 1, 1 },
+	.rotate = 0,
+	.data = &sprite_path_arc,
+	.init_sprite = init_sprite_path,
+	.draw_func = draw_sprite_path
+},
+{
+	.translate = { 20, 0 },
+	.scale = { 1, 1 },
+	.rotate = 0,
+	.data = &sprite_path_ellipse,
+	.init_sprite = init_sprite_path,
+	.draw_func = draw_sprite_path
+},
+{
+	.translate = { 20, 0 },
+	.scale = { 1, 1 },
+	.rotate = 0,
+	.data = &sprite_path_arc,
+	.init_sprite = init_sprite_path,
+	.draw_func = draw_sprite_path
+}};
+
+JS_VG_SPRITE_GROUP sprite_group_1 = {
+	.count = 5,
+	.sprites = group_array
 };
+
+JS_VG_SPRITE sprite_grupo = {
+	.translate = { 600, 250 },
+	.scale = { 1, 1 },
+	.rotate = 45,
+	.data = &sprite_group_1,
+	.init_sprite = init_sprite_group,
+	.draw_func = draw_sprite_group
+};
+
 
