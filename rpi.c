@@ -1,7 +1,7 @@
 
-
-/*
- * code adapted from openGL-RPi-tutorial-master/encode_OGL/
+/* 
+ * The code in this file is taken from https://jan.newmarch.name/RPi/OpenVG/Basic/
+ * which is also adapted from openGL-RPi-tutorial-master/encode_OGL/
  */
 
 
@@ -115,5 +115,62 @@ void egl_from_dispmanx(EGL_STATE_T *state,
     // connect the context to the surface
     result = eglMakeCurrent(state->display, state->surface, state->surface, state->context);
     assert(EGL_FALSE != result);
+}
+
+void simple_shape() {
+    VGint cap_style = VG_CAP_ROUND;
+    VGint join_style = VG_JOIN_ROUND;
+    VGfloat color[4] = {0.1, 1.0, 1.0, 0.5};
+    VGfloat color_2[4] = {0.3, 0.5, 0.9, 0.6};
+    VGfloat white_color[4] = {1.0, 1.0, 1.0, 0.7}; //1.0};
+    VGPaint fill, fill2;
+
+    static const VGubyte cmds[] = {VG_MOVE_TO_ABS,
+				   VG_LINE_TO_ABS,
+				   VG_LINE_TO_ABS,
+				   VG_CLOSE_PATH
+    };
+
+    // TODO: Modificar coordenadas para adaptar a tamaño de pantalla
+    static const VGfloat coords[]   = {-150, -150, 
+				       150, -150, 
+				       0, 150
+    };
+
+
+
+    VGfloat dash_pattern[2] = { 20.f, 20.f };
+    VGPath path = vgCreatePath(VG_PATH_FORMAT_STANDARD, 
+			       VG_PATH_DATATYPE_F, 1, 0, 0, 0,
+			       VG_PATH_CAPABILITY_APPEND_TO);
+    vgAppendPathData(path, 16, cmds, coords);
+
+    fill = vgCreatePaint();
+    fill2 = vgCreatePaint();
+    vgSetParameterfv(fill, VG_PAINT_COLOR, 4, color);
+    vgSetPaint(fill, VG_FILL_PATH);
+    vgSetParameterfv(fill2, VG_PAINT_COLOR, 4, color_2);
+    vgSetPaint(fill2, VG_STROKE_PATH);
+
+    vgSetfv(VG_CLEAR_COLOR, 4, white_color);
+    vgSetf(VG_STROKE_LINE_WIDTH, 10);
+    vgSeti(VG_STROKE_CAP_STYLE, cap_style);
+    vgSeti(VG_STROKE_JOIN_STYLE, join_style);
+    //vgSetfv(VG_STROKE_DASH_PATTERN, 2, dash_pattern);
+    //vgSetf(VG_STROKE_DASH_PHASE, stroke_desp);
+
+    //vgSeti(VG_MATRIX_MODE, VG_MATRIX_IMAGE_USER_TO_SURFACE);
+    vgTranslate(400.0f, 300.0f);
+    vgScale(1.5, 1.5);
+    //vgRotate(rota);
+
+    vgDrawPath(path, VG_STROKE_PATH|VG_FILL_PATH);
+
+    vgLoadIdentity();
+    
+    // Destruir trazo para liberar memoria GPU
+    // TODO: Quizá sea mejor crear trazos una sola vez para no tener que
+    // destruirlos, y así optimizar tiempo/velocidad.
+    vgDestroyPath(path);
 }
 

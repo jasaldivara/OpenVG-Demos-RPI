@@ -1,6 +1,7 @@
 
-/*
- * code adapted from openGL-RPi-tutorial-master/encode_OGL/
+/* 
+ * The code in this file is taken from https://jan.newmarch.name/RPi/OpenVG/Basic/
+ * which is also adapted from openGL-RPi-tutorial-master/encode_OGL/
  */
 
 
@@ -52,4 +53,6 @@ void init_egl(EGL_STATE_T *state);
 void init_dispmanx(EGL_DISPMANX_WINDOW_T *nativewindow); 
 
 void egl_from_dispmanx(EGL_STATE_T *state,EGL_DISPMANX_WINDOW_T *nativewindow);
+
+void simple_shape();
 
