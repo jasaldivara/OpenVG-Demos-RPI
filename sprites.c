@@ -6,6 +6,7 @@
  */
 
 #include "sprites.h"
+#include <stddef.h>
 
 
 void init_sprite(JS_VG_SPRITE *sprite){
@@ -71,6 +72,26 @@ void draw_sprite_group(JS_VG_SPRITE_GROUP *sprite_group){
 	draw_sprite(&array[i]);
 	//array[i].draw_func(array[i].data);
     }
+}
+
+
+JS_VG_SPRITE_LIST *spriteListFromArray(int count, JS_VG_SPRITE *sprites){
+    
+    JS_VG_SPRITE_LIST *inicio = NULL;
+    JS_VG_SPRITE_LIST *sig = NULL;
+    
+    if (count == 0){
+	return NULL;
+    }
+    
+    for (int i = 0; i < count; i++){
+	sig = malloc(sizeof(JS_VG_SPRITE_LIST));
+	sig->sig = inicio;
+	inicio = sig;
+	sig->sprite = &sprites[i];
+    }
+    
+    return inicio;
 }
 
 // Un iniciador de trazo para cada tipo de forma:

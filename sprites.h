@@ -51,8 +51,13 @@ typedef struct {
 } JS_VG_SPRITE;
 
 typedef struct {
+	JS_VG_SPRITE *sprite;
+	void *sig;
+} JS_VG_SPRITE_LIST;
+
+typedef struct {
 	int count;
-	JS_VG_SPRITE *sprites
+	JS_VG_SPRITE *sprites;
 } JS_VG_SPRITE_GROUP;
 
 typedef struct {
@@ -78,6 +83,7 @@ void init_sprite(JS_VG_SPRITE *sprite);
 
 void draw_sprite(JS_VG_SPRITE *sprite);
 
+JS_VG_SPRITE_LIST *spriteListFromArray(int count, JS_VG_SPRITE *sprites);
 
 void init_sprite_path(JS_VG_SPRITE_PATH *sprite_path);
 
