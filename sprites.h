@@ -87,11 +87,15 @@ JS_VG_SPRITE_LIST *spriteListFromArray(int count, JS_VG_SPRITE *sprites);
 
 void init_sprite_path(JS_VG_SPRITE_PATH *sprite_path);
 
-void init_sprite_group(JS_VG_SPRITE_GROUP *sprite_group);
+void init_sprite_group_array(JS_VG_SPRITE_GROUP *sprite_group);
+
+void init_sprite_group_list(JS_VG_SPRITE_LIST *sprite_group);
 
 void draw_sprite_path(JS_VG_SPRITE_PATH *sprite_path);
 
-void draw_sprite_group(JS_VG_SPRITE_GROUP *sprite_group);
+void draw_sprite_group_array(JS_VG_SPRITE_GROUP *sprite_group);
+
+void draw_sprite_group_list(JS_VG_SPRITE_LIST *sprite_group);
 
 VGPath inti_path_raw_path(void *data);
 

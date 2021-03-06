@@ -204,8 +204,9 @@ JS_VG_SPRITE sprite_grupo = {
 	.scale = { 1, 1 },
 	.rotate = 45,
 	.data = &sprite_group_1,
-	.init_sprite = init_sprite_group,
-	.draw_func = draw_sprite_group
+	.init_sprite = init_sprite_group_array,
+	.draw_func = draw_sprite_group_array
 };
+
 
 

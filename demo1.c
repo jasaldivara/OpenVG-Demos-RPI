@@ -18,7 +18,7 @@ EGL_STATE_T state, *p_state = &state;
 VGfloat stroke_desp = 0.0f;
 VGfloat rota = 0.0f;
 
-void draw(EGL_DISPMANX_WINDOW_T *nativewindow){
+void draw(EGL_DISPMANX_WINDOW_T *nativewindow, JS_VG_SPRITE *sprite_escena){
 
     float clearColor[4] = {1, 1, 1, 1};
     float dx = 1;
@@ -35,7 +35,7 @@ void draw(EGL_DISPMANX_WINDOW_T *nativewindow){
     	vgClear(0, 0, nativewindow->width, nativewindow->height);
 
     	//simple_shape();
-	draw_sprite(&sprite_grupo);
+	draw_sprite(sprite_escena);
 	eglSwapBuffers(p_state->display, p_state->surface);
 
 	//stroke_desp += 1.0f;
@@ -77,6 +77,20 @@ int
 main(int argc, char *argv[])
 { 
     EGL_DISPMANX_WINDOW_T nativewindow;
+    
+    JS_VG_SPRITE_LIST lista_sprites = {
+	.sprite = &sprite_grupo,
+	.sig = NULL
+    };
+    
+    JS_VG_SPRITE sprite_escena = {
+	.translate = { 0, 0 },
+	.scale = { 1, 1 },
+	.rotate = 0,
+	.data = &lista_sprites,
+	.init_sprite = init_sprite_group_list,
+	.draw_func = draw_sprite_group_list
+    };
 
     signal(SIGINT, sig_handler);
 
@@ -84,9 +98,9 @@ main(int argc, char *argv[])
     init_dispmanx(&nativewindow);
     egl_from_dispmanx(p_state, &nativewindow);
     
-    init_sprite(&sprite_grupo);
+    init_sprite(&sprite_escena);
 
-    draw(&nativewindow);
+    draw(&nativewindow, &sprite_escena);
     eglSwapBuffers(p_state->display, p_state->surface);
 
     sleep(20);

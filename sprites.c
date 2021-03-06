@@ -7,6 +7,7 @@
 
 #include "sprites.h"
 #include <stddef.h>
+#include <stdlib.h>
 
 
 void init_sprite(JS_VG_SPRITE *sprite){
@@ -25,13 +26,24 @@ void init_sprite_path(JS_VG_SPRITE_PATH *sprite_path){
     sprite_path->path = sprite_path->init_sp_path(sprite_path->data);
 }
 
-void init_sprite_group(JS_VG_SPRITE_GROUP *sprite_group){
+void init_sprite_group_array(JS_VG_SPRITE_GROUP *sprite_group){
     JS_VG_SPRITE *array = sprite_group->sprites;
     
     for (int i = 0; i < sprite_group->count; i++){
 	
 	array[i].init_sprite(array[i].data);
     }
+}
+
+void init_sprite_group_list(JS_VG_SPRITE_LIST *sprite_list){
+    JS_VG_SPRITE *sprite;
+    
+    while (sprite_list != NULL){
+	sprite = sprite_list->sprite;
+	sprite->init_sprite(sprite->data);
+	sprite_list = sprite_list->sig;
+    }
+
 }
 
 void draw_sprite(JS_VG_SPRITE *sprite){
@@ -64,7 +76,7 @@ void draw_sprite_path(JS_VG_SPRITE_PATH *sprite_path){
 }
 
 
-void draw_sprite_group(JS_VG_SPRITE_GROUP *sprite_group){
+void draw_sprite_group_array(JS_VG_SPRITE_GROUP *sprite_group){
     JS_VG_SPRITE *array = sprite_group->sprites;
     
     for (int i = 0; i < sprite_group->count; i++){
@@ -73,6 +85,20 @@ void draw_sprite_group(JS_VG_SPRITE_GROUP *sprite_group){
 	//array[i].draw_func(array[i].data);
     }
 }
+
+
+void draw_sprite_group_list(JS_VG_SPRITE_LIST *sprite_list){
+    JS_VG_SPRITE_LIST *list = sprite_list;
+    JS_VG_SPRITE *sprite;
+    
+    while (list != NULL){
+	sprite = list->sprite;
+	draw_sprite(sprite);
+	list = list->sig;
+    }
+
+}
+
 
 
 JS_VG_SPRITE_LIST *spriteListFromArray(int count, JS_VG_SPRITE *sprites){
