@@ -7,12 +7,17 @@ INCLUDES = $(DMX_INC) $(EGL_INC) $(GLES_INC)
 CFLAGS = -g $(INCLUDES)
 LDFLAGS =  -lm -L/opt/vc/lib/ -lbrcmEGL -lbrcmGLESv2 -lbrcmOpenVG -lbcm_host -lvcos -lvchiq_arm
 
-all: demo1
+all: demo1 sprite_scale
 
 demo1: demo1.o sprites.o rpi.o
 	cc $(CFLAGS) -o demo1 demo1.o sprites.o rpi.o $(LDFLAGS)
+	
+sprite_scale: sprite_scale.o sprites.o rpi.o
+	cc $(CFLAGS) -o sprite_scale sprite_scale.o sprites.o rpi.o $(LDFLAGS)
 
 demo1.o: demo1.c spritedata1.h sprites.h rpi.h
+
+sprite_scale.o: sprite_scale.c spritedata1.h sprites.h rpi.h
 
 sprites.o: sprites.c sprites.h
 
