@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <math.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include <EGL/egl.h>
 #include <EGL/eglext.h>
@@ -18,7 +19,74 @@ EGL_STATE_T state, *p_state = &state;
 VGfloat stroke_desp = 0.0f;
 VGfloat rota = 0.0f;
 
-void draw(EGL_DISPMANX_WINDOW_T *nativewindow, JS_VG_SPRITE *sprite_escena){
+
+typedef struct {
+    JS_VG_SPRITE *sprite;
+    float dx;
+    float dy;
+    void *sig
+} SPRITE_REBOTA;
+
+SPRITE_REBOTA *list_bouncers = NULL;
+
+void addBouncer(int w, int h, float radius){
+    float x, y;
+    float rangox, rangoy;
+    JS_VG_SPRITE *sprite;
+    
+    sprite = malloc(sizeof(JS_VG_SPRITE));
+    rangox = w - (2 * radius);
+    rangoy = h - (2 * radius);
+    
+    x = ( ( (float)rand() / (float)RAND_MAX ) * rangox ) + radius;
+    y = ( ( (float)rand() / (float)RAND_MAX ) * rangoy ) + radius;
+    
+    
+    //x = 
+    sprite->translate[0] = x;
+    sprite->translate[1] = y;
+    sprite->scale[0] = 1;
+    sprite->scale[1] = 1;
+    sprite->rotate = 0;
+    
+    sprite->data = &sprite_group_1;
+    sprite->init_sprite = init_sprite_group_array;
+    sprite->draw_func = draw_sprite_group_array;
+    
+    init_sprite(sprite);
+    
+    SPRITE_REBOTA *rebota = malloc(sizeof(SPRITE_REBOTA));
+    rebota->sprite = sprite;
+    rebota->dx = 2;
+    rebota->dy = 2;
+    rebota->sig = list_bouncers;
+    list_bouncers = rebota;
+}
+
+void procesaRebota(SPRITE_REBOTA *rebota, int scenewidth, int sceneheight){
+    rebota->sprite->rotate += 1.0f;
+    rebota->sprite->translate[0] += rebota->dx;
+    rebota->sprite->translate[1] += rebota->dy;
+    
+    if (rebota->sprite->translate[0] + 100 >= scenewidth){
+	rebota->sprite->translate[0] = scenewidth - 100;
+	rebota->dx = -1;
+    }
+    if (rebota->sprite->translate[0] - 100 <= 0){
+	rebota->sprite->translate[0] = 100;
+	rebota->dx = 1;
+    }
+    if (rebota->sprite->translate[1] + 100 >= sceneheight){
+	rebota->sprite->translate[1] = sceneheight - 100;
+	rebota->dy = -1;
+    }
+    if (rebota->sprite->translate[1] - 100 <= 0){
+	rebota->sprite->translate[1] = 100;
+	rebota->dy = 1;
+    }
+};
+
+void draw(EGL_DISPMANX_WINDOW_T *nativewindow){
 
     float clearColor[4] = {1, 1, 1, 1};
     float dx = 1;
@@ -32,33 +100,22 @@ void draw(EGL_DISPMANX_WINDOW_T *nativewindow, JS_VG_SPRITE *sprite_escena){
     while (1){
 	// ¿Por qué ellipse.c no necesita llamar a esta función durante ciclo?
 	//vgSetfv(VG_CLEAR_COLOR, 4, clearColor);
+	
     	vgClear(0, 0, nativewindow->width, nativewindow->height);
 
     	//simple_shape();
-	draw_sprite(sprite_escena);
+	//draw_sprite(sprite_escena);
+	
+	for (SPRITE_REBOTA *rebota = list_bouncers; rebota != NULL; rebota = rebota->sig){
+	    draw_sprite(rebota->sprite);
+	}
+	
 	eglSwapBuffers(p_state->display, p_state->surface);
 
-	//stroke_desp += 1.0f;
-	sprite_grupo.rotate += 1.0f;
-	sprite_grupo.translate[0] += dx;
-	sprite_grupo.translate[1] += dy;
+	for (SPRITE_REBOTA *rebota = list_bouncers; rebota != NULL; rebota = rebota->sig){
+	    procesaRebota(rebota, nativewindow->width, nativewindow->height);
+	}
 	
-	if (sprite_grupo.translate[0] + 100 >= nativewindow->width){
-	    sprite_grupo.translate[0] = nativewindow->width - 100;
-	    dx = -1;
-	}
-	if (sprite_grupo.translate[0] - 100 <= 0){
-	    sprite_grupo.translate[0] = 100;
-	    dx = 1;
-	}
-	if (sprite_grupo.translate[1] + 100 >= nativewindow->height){
-	    sprite_grupo.translate[1] = nativewindow->height - 100;
-	    dy = -1;
-	}
-	if (sprite_grupo.translate[1] - 100 <= 0){
-	    sprite_grupo.translate[1] = 100;
-	    dy = 1;
-	}
 	
     //vgFlush();
     }
@@ -83,24 +140,22 @@ main(int argc, char *argv[])
 	.sig = NULL
     };
     
-    JS_VG_SPRITE sprite_escena = {
-	.translate = { 0, 0 },
-	.scale = { 1, 1 },
-	.rotate = 0,
-	.data = &lista_sprites,
-	.init_sprite = init_sprite_group_list,
-	.draw_func = draw_sprite_group_list
-    };
-
+    
+    srand((unsigned int) time(NULL));
     signal(SIGINT, sig_handler);
 
     init_egl(p_state);
     init_dispmanx(&nativewindow);
     egl_from_dispmanx(p_state, &nativewindow);
     
-    init_sprite(&sprite_escena);
+    //init_sprite(&sprite_escena);
 
-    draw(&nativewindow, &sprite_escena);
+    addBouncer(nativewindow.width, nativewindow.height, 100);
+    addBouncer(nativewindow.width, nativewindow.height, 100);
+    addBouncer(nativewindow.width, nativewindow.height, 100);
+    addBouncer(nativewindow.width, nativewindow.height, 100);
+
+    draw(&nativewindow);
     eglSwapBuffers(p_state->display, p_state->surface);
 
     sleep(20);

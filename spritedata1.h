@@ -109,11 +109,11 @@ JS_VG_SPRITE_PATH sprite_path_1 = {
 	.fill_color = { 
 0.81,
 0.72,
-1, 0.75 },
+1, 1 },
 	.stroke_color = { 
 0.0,
 0.541176471,
-0.878431373, 0.75, },
+0.878431373, 1, },
 	.bg_color = { 1.0, 1.0, 1.0, 0.75 },
 	.data = &path_1,
 	.init_sp_path = inti_path_raw_path
@@ -126,11 +126,11 @@ JS_VG_SPRITE_PATH sprite_path_ellipse = {
 	.fill_color = { 
 0.69,
 0.87,
-0.90, 0.75, },
+0.90, 1, },
 	.stroke_color = { 
 0.0,
 0.54,
-0.87, 0.75,  },
+0.87, 1,  },
 	.bg_color = { 1.0, 1.0, 1.0, 0.75 },
 	.data = &e_1,
 	.init_sp_path = inti_path_ellipse
@@ -143,11 +143,11 @@ JS_VG_SPRITE_PATH sprite_path_arc = {
 	.fill_color = { 
 0.0,
 0.54,
-0.87, 0.75,  },
+0.87, 1,  },
 	.stroke_color = { 
 0.0,
 0.54,
-0.87, 0.75, },
+0.87, 1, },
 	.bg_color = { 1.0, 1.0, 1.0, 0.75 },
 	.data = &a_1,
 	.init_sp_path = inti_path_arc
