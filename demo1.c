@@ -13,6 +13,7 @@
 #include "sprites.h"
 #include "spritedata1.h"
 
+#define PI 3.1416
  
 EGL_STATE_T state, *p_state = &state;
 
@@ -22,6 +23,7 @@ VGfloat rota = 0.0f;
 
 typedef struct {
     JS_VG_SPRITE *sprite;
+    float dr;
     float dx;
     float dy;
     void *sig
@@ -30,7 +32,7 @@ typedef struct {
 SPRITE_REBOTA *list_bouncers = NULL;
 
 void addBouncer(int w, int h, float radius){
-    float x, y;
+    float x, y, ang, vel, dr, dx, dy;
     float rangox, rangoy;
     JS_VG_SPRITE *sprite;
     
@@ -41,6 +43,15 @@ void addBouncer(int w, int h, float radius){
     x = ( ( (float)rand() / (float)RAND_MAX ) * rangox ) + radius;
     y = ( ( (float)rand() / (float)RAND_MAX ) * rangoy ) + radius;
     
+    ang = ( ( (float)rand() / (float)RAND_MAX ) * PI * 2);
+    vel = ( ( (float)rand() / (float)RAND_MAX ) * 8);
+    dr = ( ( (float)rand() / (float)RAND_MAX ) * 4) - 2;
+
+    //dx = ( ( (float)rand() / (float)RAND_MAX ) * 4 ) - 2;
+    //dy = ( ( (float)rand() / (float)RAND_MAX ) * 4 ) - 2;
+
+    dx = sin(ang) * vel;
+    dy = cos(ang) * vel;
     
     //x = 
     sprite->translate[0] = x;
@@ -57,32 +68,41 @@ void addBouncer(int w, int h, float radius){
     
     SPRITE_REBOTA *rebota = malloc(sizeof(SPRITE_REBOTA));
     rebota->sprite = sprite;
-    rebota->dx = 2;
-    rebota->dy = 2;
+    rebota->dr = dr;
+    rebota->dx = dx;
+    rebota->dy = dy;
     rebota->sig = list_bouncers;
     list_bouncers = rebota;
 }
 
 void procesaRebota(SPRITE_REBOTA *rebota, int scenewidth, int sceneheight){
-    rebota->sprite->rotate += 1.0f;
+    rebota->sprite->rotate += rebota->dr;
     rebota->sprite->translate[0] += rebota->dx;
     rebota->sprite->translate[1] += rebota->dy;
     
     if (rebota->sprite->translate[0] + 100 >= scenewidth){
 	rebota->sprite->translate[0] = scenewidth - 100;
-	rebota->dx = -1;
+	if (rebota->dx > 0){
+	    rebota->dx *= -1;
+	}
     }
     if (rebota->sprite->translate[0] - 100 <= 0){
 	rebota->sprite->translate[0] = 100;
-	rebota->dx = 1;
+	if (rebota->dx < 0){
+	    rebota->dx *= -1;
+	}
     }
     if (rebota->sprite->translate[1] + 100 >= sceneheight){
 	rebota->sprite->translate[1] = sceneheight - 100;
-	rebota->dy = -1;
+	if (rebota->dy > 0){
+	    rebota->dy *= -1;
+	}
     }
     if (rebota->sprite->translate[1] - 100 <= 0){
 	rebota->sprite->translate[1] = 100;
-	rebota->dy = 1;
+	if (rebota->dy < 0){
+	    rebota->dy *= -1;
+	}
     }
 };
 
