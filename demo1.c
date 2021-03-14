@@ -88,7 +88,7 @@ void procesaRebota(SPRITE_REBOTA *rebota, int scenewidth, int sceneheight){
 
 void draw(EGL_DISPMANX_WINDOW_T *nativewindow){
 
-    float clearColor[4] = {1, 1, 1, 1};
+    float clearColor[4] = {1, 1, 1, 0};
     float dx = 1;
     float dy = 1;
     vgSetfv(VG_CLEAR_COLOR, 4, clearColor);
@@ -99,7 +99,7 @@ void draw(EGL_DISPMANX_WINDOW_T *nativewindow){
     
     while (1){
 	// ¿Por qué ellipse.c no necesita llamar a esta función durante ciclo?
-	//vgSetfv(VG_CLEAR_COLOR, 4, clearColor);
+	vgSetfv(VG_CLEAR_COLOR, 4, clearColor);
 	
     	vgClear(0, 0, nativewindow->width, nativewindow->height);
 

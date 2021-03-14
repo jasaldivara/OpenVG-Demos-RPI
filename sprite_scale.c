@@ -20,7 +20,7 @@ VGfloat rota = 0.0f;
 
 void draw(EGL_DISPMANX_WINDOW_T *nativewindow, JS_VG_SPRITE *sprite_escena){
 
-    float clearColor[4] = {1, 1, 1, 1};
+    float clearColor[4] = {1, 1, 1, 0};
     float dx = 1;
     float dy = 1;
     float ds = 1.01;
@@ -32,7 +32,7 @@ void draw(EGL_DISPMANX_WINDOW_T *nativewindow, JS_VG_SPRITE *sprite_escena){
     
     while (1){
 	// ¿Por qué ellipse.c no necesita llamar a esta función durante ciclo?
-	//vgSetfv(VG_CLEAR_COLOR, 4, clearColor);
+	vgSetfv(VG_CLEAR_COLOR, 4, clearColor);
     	vgClear(0, 0, nativewindow->width, nativewindow->height);
 
     	//simple_shape();
