@@ -84,24 +84,32 @@ void procesaRebota(SPRITE_REBOTA *rebota, int scenewidth, int sceneheight){
 	rebota->sprite->translate[0] = scenewidth - 100;
 	if (rebota->dx > 0){
 	    rebota->dx *= -1;
+	    rebota->dr += 0 - rebota->dy;
+	    rebota->dr /= 2;
 	}
     }
     if (rebota->sprite->translate[0] - 100 <= 0){
 	rebota->sprite->translate[0] = 100;
 	if (rebota->dx < 0){
 	    rebota->dx *= -1;
+	    rebota->dr +=  rebota->dy;
+	    rebota->dr /= 2;
 	}
     }
     if (rebota->sprite->translate[1] + 100 >= sceneheight){
 	rebota->sprite->translate[1] = sceneheight - 100;
 	if (rebota->dy > 0){
 	    rebota->dy *= -1;
+	    rebota->dr +=  rebota->dx;
+	    rebota->dr /= 2;
 	}
     }
     if (rebota->sprite->translate[1] - 100 <= 0){
 	rebota->sprite->translate[1] = 100;
 	if (rebota->dy < 0){
 	    rebota->dy *= -1;
+	    rebota->dr += 0 - rebota->dx;
+	    rebota->dr /= 2;
 	}
     }
 };
