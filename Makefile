@@ -9,8 +9,8 @@ LDFLAGS =  -lm -L/opt/vc/lib/ -lbrcmEGL -lbrcmGLESv2 -lbrcmOpenVG -lbcm_host -lv
 
 all: demo1 sprite_scale gui
 
-demo1: demo1.o sprites.o rpi.o
-	cc $(CFLAGS) -o demo1 demo1.o sprites.o rpi.o $(LDFLAGS)
+demo1: demo1.o sprites.o vc.o
+	cc $(CFLAGS) -o demo1 demo1.o sprites.o vc.o $(LDFLAGS)
 	
 gui: gui.o rpi.o
 	cc $(CFLAGS) -o gui gui.o rpi.o $(LDFLAGS)
@@ -27,6 +27,8 @@ sprite_scale.o: sprite_scale.c spritedata1.h sprites.h rpi.h
 sprites.o: sprites.c sprites.h
 
 rpi.o: rpi.h
+
+vc.o: vc.h
 
 clean:
 	rm *.o
