@@ -69,21 +69,21 @@ void draw(EGL_DISPMANX_WINDOW_T *nativewindow){
 
 	VGPaint fill_paint, stroke_paint;
 	VGfloat fill_color[] = { 
-0.51,
-1,
-0.81, 1 };
+0.91,
+0.9,
+0.91, 1 };
 	VGfloat stroke_color[] = { 
-0.5,
-0.841176471,
-0.378431373, 1, };
+0.2,
+0.241176471,
+0.278431373, 1, };
 
     fill_paint = vgCreatePaint();
     vgSetParameterfv(fill_paint, VG_PAINT_COLOR, 4, fill_color);
     
-    VGPath wpath = get_window_path(200, 300, 600, 400, 10);
+    VGPath wpath = get_window_path(200, 300, 600, 400, 5);
     
-    //stroke_paint = vgCreatePaint();
-    //vgSetParameterfv(stroke_paint, VG_PAINT_COLOR, 4, stroke_color);
+    stroke_paint = vgCreatePaint();
+    vgSetParameterfv(stroke_paint, VG_PAINT_COLOR, 4, stroke_color);
     
     float clearColor[4] = {1, 1, 1, 0};
     vgSetfv(VG_CLEAR_COLOR, 4, clearColor);
@@ -93,10 +93,10 @@ void draw(EGL_DISPMANX_WINDOW_T *nativewindow){
     vgSeti(VG_BLEND_MODE, VG_BLEND_SRC_OVER);
 
     vgSetPaint(fill_paint, VG_FILL_PATH);
-    //vgSetPaint(sprite_path->stroke_paint, VG_STROKE_PATH);
+    vgSetPaint(stroke_paint, VG_STROKE_PATH);
     
     //vgSetfv(VG_CLEAR_COLOR, 4, sprite_path->bg_color);
-    vgSetf(VG_STROKE_LINE_WIDTH, 0);
+    vgSetf(VG_STROKE_LINE_WIDTH, 2);
     //vgSeti(VG_STROKE_CAP_STYLE, sprite_path->cap_style);
     //vgSeti(VG_STROKE_JOIN_STYLE, sprite_path->join_style);
     
