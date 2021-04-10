@@ -8,12 +8,11 @@
 #include <VG/openvg.h>
 #include <VG/vgu.h>
 
-#include "rpi.h"
+#include "vc.h"
 #include "sprites.h"
 #include "spritedata1.h"
 
- 
-EGL_STATE_T state, *p_state = &state;
+
 
 VGfloat stroke_desp = 0.0f;
 VGfloat rota = 0.0f;
@@ -37,10 +36,10 @@ void draw(EGL_DISPMANX_WINDOW_T *nativewindow, JS_VG_SPRITE *sprite_escena){
 
     	//simple_shape();
 	draw_sprite(sprite_escena);
-	eglSwapBuffers(p_state->display, p_state->surface);
+	eglSwapBuffers(egldisplay, eglsurface);
 
 	//stroke_desp += 1.0f;
-	sprite_grupo.rotate += 1.0f;
+	sprite_grupo.rotate += 2.0f;
 	sprite_grupo.scale[0] *= ds;
 	sprite_grupo.scale[1] *= ds;
 	sprite_grupo.translate[0] += dx;
@@ -80,7 +79,8 @@ void draw(EGL_DISPMANX_WINDOW_T *nativewindow, JS_VG_SPRITE *sprite_escena){
 
 void sig_handler(int sig) {
     printf("Abortando proceso...\n");
-    eglTerminate(p_state->display);
+    //eglTerminate(p_state->display);
+    deinit();
     exit(1);
 }
 /*
@@ -115,18 +115,13 @@ main(int argc, char *argv[])
 
     signal(SIGINT, sig_handler);
 
-    init_egl(p_state);
-    init_dispmanx(&nativewindow);
-    egl_from_dispmanx(p_state, &nativewindow);
+    inicia_vc(&nativewindow);
     
     init_sprite(&sprite_escena);
 
     draw(&nativewindow, &sprite_escena);
-    eglSwapBuffers(p_state->display, p_state->surface);
-
-    sleep(20);
-    eglTerminate(p_state->display);
-
+    
+    deinit();
     exit(0);
 }
 
