@@ -71,11 +71,11 @@ void draw(EGL_DISPMANX_WINDOW_T *nativewindow){
 	VGfloat fill_color[] = { 
 0.91,
 0.9,
-0.91, 1 };
+1, 0.9 };
 	VGfloat stroke_color[] = { 
 0.2,
 0.241176471,
-0.278431373, 1, };
+0.278431373, 0.5, };
 
     fill_paint = vgCreatePaint();
     vgSetParameterfv(fill_paint, VG_PAINT_COLOR, 4, fill_color);
