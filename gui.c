@@ -9,10 +9,8 @@
 #include <VG/openvg.h>
 #include <VG/vgu.h>
 
-#include "rpi.h"
+#include "vc.h"
 
- 
-EGL_STATE_T state, *p_state = &state;
 
 VGPath get_window_path(float x, float y, float w, float h, float radius){
 	static VGfloat coords[16 * 2];
@@ -102,7 +100,7 @@ void draw(EGL_DISPMANX_WINDOW_T *nativewindow){
     
     vgDrawPath(wpath, VG_STROKE_PATH | VG_FILL_PATH);   
     
-    eglSwapBuffers(p_state->display, p_state->surface);
+    eglSwapBuffers(egldisplay, eglsurface);
 
     vgFlush();
 }
@@ -111,7 +109,7 @@ void draw(EGL_DISPMANX_WINDOW_T *nativewindow){
 
 void sig_handler(int sig) {
     printf("Abortando proceso...\n");
-    eglTerminate(p_state->display);
+    deinit();
     exit(1);
 }
 
@@ -122,16 +120,14 @@ main(int argc, char *argv[])
 
     signal(SIGINT, sig_handler);
 
-    init_egl(p_state);
-    init_dispmanx(&nativewindow);
-    egl_from_dispmanx(p_state, &nativewindow);
+
+    inicia_vc(&nativewindow);
 
     draw(&nativewindow);
     
     getchar();
-    //eglSwapBuffers(p_state->display, p_state->surface);
 
-    eglTerminate(p_state->display);
+    deinit();
 
     exit(0);
 }

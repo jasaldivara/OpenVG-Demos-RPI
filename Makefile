@@ -12,15 +12,15 @@ all: demo1 sprite_scale gui
 demo1: demo1.o sprites.o vc.o
 	cc $(CFLAGS) -o demo1 demo1.o sprites.o vc.o $(LDFLAGS)
 	
-gui: gui.o rpi.o
-	cc $(CFLAGS) -o gui gui.o rpi.o $(LDFLAGS)
+gui: gui.o vc.o
+	cc $(CFLAGS) -o gui gui.o vc.o $(LDFLAGS)
 	
 sprite_scale: sprite_scale.o sprites.o vc.o
 	cc $(CFLAGS) -o sprite_scale sprite_scale.o sprites.o vc.o $(LDFLAGS)
 
 demo1.o: demo1.c spritedata1.h sprites.h vc.h
 
-gui.o: gui.c rpi.h
+gui.o: gui.c vc.h
 
 sprite_scale.o: sprite_scale.c spritedata1.h sprites.h vc.h
 
