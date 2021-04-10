@@ -1,3 +1,17 @@
+
+/**
+ * Copyright 2021 Jesús Abelardo Saldívar Aguilar
+ *
+ *
+ * This will be a demonstration of drawing a Graphical User Interface
+ * using OpenVG.
+ *
+ * At this moment, it only draws a rectangle (a window) with rounded corners
+ * on the screen.
+ *
+ */
+ 
+ 
 #include <stdio.h>
 #include <assert.h>
 #include <math.h>

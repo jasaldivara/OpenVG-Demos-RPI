@@ -2,9 +2,7 @@
 /**
  * Copyright 2021 Jesús Abelardo Saldívar Aguilar
  *
- * This file contains the source for graphical data, and is distributed
- * under the Creative Commons Attribution-ShareAlike 4.0 International
- * Public License.
+ * This file contains the source for graphical data.
  *
  */
 

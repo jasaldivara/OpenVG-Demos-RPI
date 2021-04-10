@@ -1,3 +1,13 @@
+
+/**
+ * Copyright 2021 Jesús Abelardo Saldívar Aguilar
+ *
+ *
+ * Demonstration of multiple sprites bouncing and rotating on screen.
+ *
+ */
+
+
 #include <stdio.h>
 #include <assert.h>
 #include <math.h>

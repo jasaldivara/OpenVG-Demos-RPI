@@ -1,3 +1,13 @@
+
+/**
+ * Copyright 2021 Jesús Abelardo Saldívar Aguilar
+ *
+ *
+ * Demonstration of sprite scaling with OpenVG
+ *
+ */
+
+
 #include <stdio.h>
 #include <assert.h>
 #include <math.h>
