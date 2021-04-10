@@ -1,0 +1,6 @@
+Playing with the OpenVG API on the Raspberry Pi.
+
+Compatible with Raspberry Pi 1, 2, 3 and Zero.
+Raspberry Pi 4 does not support the OpenVG API.
+
+OpenVG is an API for drawig vector graphics.
