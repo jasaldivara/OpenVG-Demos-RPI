@@ -14,8 +14,8 @@
 #include "spritedata1.h"
 
 #define PI 3.1416
- 
-//EGL_STATE_T state, *p_state = &state;
+
+
 
 VGfloat stroke_desp = 0.0f;
 VGfloat rota = 0.0f;
@@ -131,7 +131,6 @@ void draw(EGL_DISPMANX_WINDOW_T *nativewindow){
 	
     	vgClear(0, 0, nativewindow->width, nativewindow->height);
 
-    	//simple_shape();
 	//draw_sprite(sprite_escena);
 	
 	for (SPRITE_REBOTA *rebota = list_bouncers; rebota != NULL; rebota = rebota->sig){
@@ -154,7 +153,6 @@ void draw(EGL_DISPMANX_WINDOW_T *nativewindow){
 
 void sig_handler(int sig) {
     printf("Abortando proceso...\n");
-    //eglTerminate(p_state->display);
     deinit();
     exit(1);
 }
@@ -173,10 +171,7 @@ main(int argc, char *argv[])
     srand((unsigned int) time(NULL));
     signal(SIGINT, sig_handler);
 
-    //init_dispmanx(&nativewindow);
-    //init_egl(p_state);
     inicia_vc(&nativewindow);
-    //egl_from_dispmanx(p_state, &nativewindow);
     
     //init_sprite(&sprite_escena);
 
@@ -186,10 +181,7 @@ main(int argc, char *argv[])
     addBouncer(nativewindow.width, nativewindow.height, 100);
 
     draw(&nativewindow);
-    //eglSwapBuffers(p_state->display, p_state->surface);
 
-    //sleep(20);
-    //eglTerminate(p_state->display);
     deinit();
 
     exit(0);
