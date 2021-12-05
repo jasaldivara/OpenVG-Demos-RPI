@@ -3,7 +3,7 @@
  * Copyright 2021 Jesús Abelardo Saldívar Aguilar
  *
  *
- * This file contains various functions for manipilating and displaying sprites.
+ * This file contains various functions for manipulating and displaying sprites.
  */
 
 #include "sprites.h"
