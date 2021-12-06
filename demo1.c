@@ -189,6 +189,10 @@ main(int argc, char *argv[])
     addBouncer(nativewindow.width, nativewindow.height, 100);
     addBouncer(nativewindow.width, nativewindow.height, 100);
     addBouncer(nativewindow.width, nativewindow.height, 100);
+    addBouncer(nativewindow.width, nativewindow.height, 100);
+    addBouncer(nativewindow.width, nativewindow.height, 100);
+    addBouncer(nativewindow.width, nativewindow.height, 100);
+    addBouncer(nativewindow.width, nativewindow.height, 100);
 
     draw(&nativewindow);
 
